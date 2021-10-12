@@ -7,7 +7,6 @@ from rest_framework.response    import Response
 from django.http import HttpResponse, JsonResponse
 #import requests
 
-
 # Create your views here.
 
 class ActorsList( APIView ):
