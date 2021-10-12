@@ -2,6 +2,14 @@
 
 Here we have some commands that we will need.
 
+### Create virtual Environment
+
+```
+sh
+python -m venv env
+```
+
+
 ### Activate virtual Environment
 
 ```
@@ -63,6 +71,30 @@ sh
 python manage.py runserver
 ```
 
+### Test Rest API - GET method
+
+go to 
+http://127.0.0.1:8000
+
+or in a terminal
+```
+sh
+curl http://127.0.0.1:8000/
+
+curl http://127.0.0.1:8000/ | python -m json.tool
+
+curl -X GET http://127.0.0.1:8000/ | python -m json.tool
+```
+
+### Test Rest API - POST method
+
+```
+sh
+curl -X POST http://127.0.0.1:8000/ \
+-H 'content-type: application/json' \
+-d  '{ "name" : "Kim Kardashian", "age" : "33" }' \
+| python -m json.tool
+```
 
 
 
