@@ -16,8 +16,8 @@ class ActorsList( APIView ):
 
     def get( self, request ):
         actors = Actor.objects.all()
-        serialize = ActorSerializers( actors, many = True)
-        return Response( serialize.data )
+        serializer = ActorSerializers( actors, many = True)
+        return Response( serializer.data )
 
 
     def post( self, request ):
@@ -30,5 +30,28 @@ class ActorsList( APIView ):
         return Response( serializer.errors, status = status.HTTP_400_BAD_REQUEST )
 
 
+class ActorByID( APIView ):
+
+    def get_actor( self, id ):
+        return Actor.objects.get( pk = id )
+
+    def get( self, request, pk ):
+        actor       = self.get_actor( pk )
+        serializer  = ActorSerializers( actor )
+        return Response( serializer.data )
 
 
+    def put( self, request, pk ):
+        actor       = self.get_actor( pk )
+        serializer  = ActorSerializers( actor, request.data )
+        if serializer.is_valid():
+            serializer.save()
+            Response( serializer.data, status = status.HTTP_200_OK )
+
+        return Response( serializer.errors, status = status.HTTP_400_BAD_REQUEST )
+
+    def delete( self, request, pk ):
+        actor       = self.get_actor( pk )
+        actor.delete()
+        return Response( status = status.HTTP_204_NO_CONTENT )
+        
